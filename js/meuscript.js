@@ -21,12 +21,20 @@ $(document).ready(function(){
 			function(data) {
 				var imagem;
 				var arquivo;
+				console.log(data)
 				$.each(data.items, function(i, item){
 					imagem = item.snippet.thumbnails.medium.url;
-					arquivo = '<li class="principal"><div class="foto"><img src="'+ imagem +'"/><div class="legenda"><h5>Título</h5></div></div></li>';
+					titulo = item.snippet.title;
+					publicacao = formartarData(item.snippet.publishedAt);
+					videoId = item.snippet.resourceId.videoId;
+					arquivo = '<li class="principal"><a class="fancybox-media" href="https://www.youtube.com/watch?v='+ videoId +'"><div class="foto"><img src="'+ imagem +'"/><div class="legenda"><h5>'+ titulo + '</h5><p>Data: '+ publicacao +'</p></div></div></a></li>';
 					$('div#janela ul').append(arquivo);
 				});
 			}
 		)
+	}
+
+	function formartarData(data){
+		return data.substr(8,2) + '/' + data.substr(5,2) + '/' + data.substr(0,4);
 	}
 });
